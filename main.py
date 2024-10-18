@@ -52,15 +52,13 @@ if __name__ == '__main__':
                                                                     engine='python')
 
     dataframe['X-coordinate'] = pd.to_numeric(dataframe['X-coordinate'], errors='coerce')
-    # x_coor = pd.to_numeric(dataframe['Y-coordinate'], errors='coerce')
-    # y_coor = pd.to_numeric(dataframe['Y-coordinate'], errors='coerce')
 
-    look_back = 1
+
+    look_back = 3
     dataframe = dataframe.values
     dataframe = dataframe.astype('float32')
 
     dataframe = dataframe[20000:22500:5]
-    # print(dataframe.shape)
 
 
     scaler = MinMaxScaler(feature_range=(0, 1))
@@ -69,23 +67,10 @@ if __name__ == '__main__':
     train_size = int(len(dataset) * 0.67)
     test_size = len(dataset) - train_size
     train, test = dataset[0:train_size, :], dataset[train_size:len(dataset), :]
-    # print(len(train), len(test))
 
     trainX, trainY = create_dataset(train, look_back)
     testX, testY = create_dataset(test, look_back)
-    # print(trainX.shape)
-    trainX = np.reshape(trainX, (trainX.shape[0], trainX.shape[1]))
-    testX = np.reshape(testX, (testX.shape[0], testX.shape[1]))
-    # print(trainX.shape)
-    # testX = np.reshape(testX, (testX.shape[0], 1, testX.shape[1]))
 
-    # print(trainX.shape[0])
-    # print(trainX.shape[1])
-    # print(trainX.shape)
-    # print(dataset.shape)
-    # print(dataframe[0,1])
-    # print(dataset.shape)
-    # print(trainX[0])
 
     model = Sequential()
     model.add(LSTM(4, input_shape=(1, look_back)))
@@ -104,17 +89,13 @@ if __name__ == '__main__':
     trainY = scaler.inverse_transform(trainY)
     testPredict = scaler.inverse_transform(testPredict)
     testY = scaler.inverse_transform(testY)
-    # trainPredict = scaler.inverse_transform(np.concatenate((trainPredict, np.zeros((trainPredict.shape[0], 1))), axis=1))
-    # trainY = scaler.inverse_transform(np.concatenate((trainY.reshape(-1, 1), np.zeros((trainY.shape[0], 1))), axis=1))
-    # testPredict = scaler.inverse_transform(np.concatenate((testPredict, np.zeros((testPredict.shape[0], 1))), axis=1))
-    # testY = scaler.inverse_transform(np.concatenate((testY.reshape(-1, 1), np.zeros((testY.shape[0], 1))), axis=1))
+
     # calculate root mean squared error
     # trainScore = np.sqrt(mean_squared_error(trainY[0], trainPredict[:, 0]))
     # print('Train Score: %.2f RMSE' % (trainScore))
     # testScore = np.sqrt(mean_squared_error(testY[0], testPredict[:, 0]))
     # print('Test Score: %.2f RMSE' % (testScore))
-    # print(trainPredict.shape)
-    # print(trainY.shape)
+
 
     # shift train predictions for plotting
     trainPredictPlot = np.empty_like(dataset)
@@ -130,16 +111,3 @@ if __name__ == '__main__':
     plt.plot(testPredictPlot)
     plt.show()
 
-    # print(trainPredict[5][0])
-    # print(trainPredict[5][1])
-    # print(trainPredict[6][1])
-    # print(trainPredict[7][1])
-    # print(trainPredict.shape)
-    # print(dataframe.shape)
-
-
-
-    # dataframe['X-coordinate'] = pd.to_numeric(dataframe['X-coordinate'], errors='coerce')
-    # print(dataframe.to_string())
-    # plt.plot(dataframe['Battery cell voltage'])
-    # plt.show()
