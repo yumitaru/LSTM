@@ -13,16 +13,6 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from sklearn.metrics import mean_squared_error
 from tensorflow.keras.layers import LSTM
 
-# def df_to_X_y(df, window_size=5):
-#     df_np = df.to_numpy()
-#     X = []
-#     y = []
-#     for i in range(len(df_np)-window_size):
-#         row = [[a] for a in df_np[i:i+window_size]]
-#         X.append(row)
-#         label = df_np[i+5]
-#         y.append(label)
-#     return np.array(X), np.array(y)
 
 def create_dataset(dataset, look_back=1):
     dataX, dataY = [], []
