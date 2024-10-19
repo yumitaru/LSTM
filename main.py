@@ -34,7 +34,8 @@ if __name__ == '__main__':
     dataframe = pd.read_csv(r'6000_frames_20221124+25_new.pkl', usecols=[
                                                                     # 'id_val',
                                                                     # 'Timestamp',
-                                                                    # 'Battery cell voltage',
+                                                                    'Battery cell voltage',
+                                                                        'Heading',
                                                                         'Going to ID',
                                                                         'Y-coordinate',
                                                                         'X-coordinate'
@@ -64,7 +65,7 @@ if __name__ == '__main__':
 
     model = Sequential()
     model.add(LSTM(4, input_shape=(1, look_back)))
-    model.add(Dense(3))
+    model.add(Dense(5))
     model.compile(loss='mean_squared_error', optimizer='adam')
     model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
 
